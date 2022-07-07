@@ -29,7 +29,7 @@ describe('Method Post, route /login', () => {
   });
 
   after(()=>{
-    (User.findOne as sinon.SinonStub).restore();
+    (User.create as sinon.SinonStub).restore();
   })
 
   it('Success request to POST /login', async () => {
