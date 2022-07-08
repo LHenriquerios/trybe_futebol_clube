@@ -5,7 +5,7 @@ export default class Login implements IModel {
   login = async (data: Omit<IUser, 'id' & 'password'>): Promise<IUser> => {
     const { email, password } = data;
     const user = await Model.findOne({ where: { email, password } });
-
-    return user as IUser;
+    if (!user) throw new Error('Username or password invalid');
+    return user as unknown as IUser;
   };
 }
