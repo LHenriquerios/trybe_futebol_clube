@@ -1,18 +1,9 @@
 import * as express from 'express';
-import LoginController from './controllers/Login';
-import Repository from './repository';
-import LoginService from './services/login';
-
-const LoginFactory = () => {
-  const repository = new Repository();
-  const service = new LoginService(repository);
-  const controller = new LoginController(service);
-
-  return controller;
-};
+import Router from './routes';
 
 class App {
   public app: express.Express;
+  public router = new Router();
 
   constructor() {
     this.app = express();
@@ -33,10 +24,7 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-
-    this.app.post('/login', (req, res, next) => {
-      LoginFactory().create(req, res, next);
-    });
+    this.router.login(this.app);
   }
 
   public start(PORT: string | number):void {
