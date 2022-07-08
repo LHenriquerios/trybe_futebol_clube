@@ -1,19 +1,16 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { IService } from '../interfaces/Login';
+import UserService from '../services/login';
 
 export default class Controller {
-  constructor(private service: IService) {
-    this.service = service;
-  }
-
-  async create(req: Request, res: Response, next: NextFunction) {
+  create = async (req: Request, res: Response, next: NextFunction) => {
+    const service = new UserService();
     try {
-      const token = await this.service.login(req.body);
+      const token = await service.login(req.body);
 
       return res.status(StatusCodes.OK).json({ token });
     } catch (error) {
       next(error);
     }
-  }
+  };
 }

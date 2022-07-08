@@ -1,11 +1,11 @@
-import { IUser, IService, IModel } from '../interfaces/Login';
+import Model from '../database/models/User';
+import { IUser, IModel } from '../interfaces/Login';
 
-export default class Service implements IService {
-  constructor(private model: IModel) {
-    this.model = model;
-  }
+export default class Login implements IModel {
+  login = async (data: Omit<IUser, 'id' & 'password'>): Promise<IUser> => {
+    const { email, password } = data;
+    const user = await Model.findOne({ where: { email, password } });
 
-  login(data: Omit<IUser, 'id' & 'password'>): Promise<IUser> {
-    return this.model.login(data);
-  }
+    return user as IUser;
+  };
 }
