@@ -16,7 +16,7 @@ const errorMiddleware = (
     return res.status(err.status).json({ message: 'All fields must be filled' });
   }
 
-  if (err.message.includes('Username or password invalid')) {
+  if (err.message.includes('Incorrect email or password')) {
     return res.status(StatusCodes.UNAUTHORIZED).json({ message: err.message });
   }
 

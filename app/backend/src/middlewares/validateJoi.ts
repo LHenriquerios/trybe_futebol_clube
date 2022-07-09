@@ -7,7 +7,7 @@ const validateJoi = (schemas:Schema) => (req: Request, _res: Response, next: Nex
 
   if (error) {
     switch (error.details[0].type) {
-      case 'any.required':
+      case 'string.empty':
         next({ status: StatusCodes.BAD_REQUEST, message: error.details[0].message });
         break;
       default:

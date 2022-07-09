@@ -8,11 +8,11 @@ export default class Login implements IModel {
     const { email, password } = data;
 
     const user = await Model.findOne({ where: { email } });
-    if (!user) throw new Error('Username or password invalid');
+    if (!user) throw new Error('Incorrect email or password');
     const hash = user.dataValues.password;
 
     const check = await bcrypt.compare(password, hash);
-    if (!check) throw new Error('Username or password invalid');
+    if (!check) throw new Error('Incorrect email or password');
 
     const token = generateToken(user.dataValues);
     return token;
