@@ -9,6 +9,13 @@ class User extends Model {
   public role!: string;
   public email!: string;
   public password!: string;
+  dataValues: {
+    id: number;
+    username: string;
+    role: string;
+    email: string;
+    password: string;
+  };
 }
 
 User.init({

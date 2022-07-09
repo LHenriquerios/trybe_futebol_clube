@@ -11,5 +11,5 @@ export interface IService {
 }
 
 export interface IModel {
-  login(data: Omit<IUser, 'id' & 'password'>): Promise<IUser>;
+  login(data: Omit<IUser, 'id' & 'password'>): Promise<string>;
 }
