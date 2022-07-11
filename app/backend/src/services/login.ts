@@ -17,4 +17,9 @@ export default class Login implements IModel {
     const token = generateToken(user.dataValues);
     return token;
   };
+
+  getValidade = async (id: number): Promise<IUser> => {
+    const data = await Model.findByPk(id);
+    return data as IUser;
+  };
 }

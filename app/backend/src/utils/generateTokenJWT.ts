@@ -9,5 +9,5 @@ export default function generateToken(payload: IUser) {
     algorithm: 'HS256',
   };
 
-  return JWT.sign(payload, JWT_SECRET, signInOptions);
+  return JWT.sign({ data: payload }, JWT_SECRET, signInOptions);
 }
