@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '.';
-// import OtherModel from './OtherModel';
+// eslint-disable-next-line import/no-cycle
+import Teams from './Teams';
 
 class Match extends Model {
   // public <campo>!: <tipo>;
@@ -56,7 +57,7 @@ Match.init({
 // OtherModel.belongsTo(Example, { foreignKey: 'campoA', as: 'campoEstrangeiroA' });
 // OtherModel.belongsTo(Example, { foreignKey: 'campoB', as: 'campoEstrangeiroB' });
 
-// Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
-// Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
+Teams.hasMany(Match, { foreignKey: 'homeTeam', as: 'id' });
+Teams.hasMany(Match, { foreignKey: 'awayTeam', as: 'id' });
 
 export default Match;
