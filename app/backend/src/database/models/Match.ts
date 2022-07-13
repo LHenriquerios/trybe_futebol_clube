@@ -1,7 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '.';
-// eslint-disable-next-line import/no-cycle
-import Teams from './Teams';
+import Team from './Teams';
 
 class Match extends Model {
   // public <campo>!: <tipo>;
@@ -54,10 +53,10 @@ Match.init({
   * Associations 1:N devem ficar em uma das instâncias de modelo
   * */
 
-// OtherModel.belongsTo(Example, { foreignKey: 'campoA', as: 'campoEstrangeiroA' });
-// OtherModel.belongsTo(Example, { foreignKey: 'campoB', as: 'campoEstrangeiroB' });
+Match.belongsTo(Team, { foreignKey: 'homeTeam', as: 'teamHome' });
+Match.belongsTo(Team, { foreignKey: 'awayTeam', as: 'teamAway' });
 
-Teams.hasMany(Match, { foreignKey: 'homeTeam', as: 'id' });
-Teams.hasMany(Match, { foreignKey: 'awayTeam', as: 'id' });
+Team.hasMany(Match, { foreignKey: 'homeTeam', as: 'homeMatches' });
+Team.hasMany(Match, { foreignKey: 'awayTeam', as: 'awayMatches' });
 
 export default Match;

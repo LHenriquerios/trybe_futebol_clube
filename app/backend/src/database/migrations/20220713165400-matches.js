@@ -13,7 +13,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         field: 'home_team',
-        foreignKey: true
+        foreignKey: true,
+        references: { model: 'Team', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       homeTeamGoals: {
         type: Sequelize.INTEGER,
@@ -24,7 +27,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         field: 'away_team',
-        foreignKey: true
+        foreignKey: true,
+        references: { model: 'Team', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       awayTeamGoals: {
         type: Sequelize.INTEGER,
