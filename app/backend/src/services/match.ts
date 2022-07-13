@@ -15,4 +15,32 @@ export default class Matches implements IModel {
       attributes: { exclude: ['id'] },
     }],
   });
+
+  getByProgressOn = async (): Promise<IMatch[]> => Model.findAll({
+    order: [['inProgress', 'DESC']],
+    include: [{
+      model: Team,
+      as: 'teamHome',
+      attributes: { exclude: ['id'] },
+    },
+    {
+      model: Team,
+      as: 'teamAway',
+      attributes: { exclude: ['id'] },
+    }],
+  });
+
+  getByProgressOff = async (): Promise<IMatch[]> => Model.findAll({
+    order: [['inProgress', 'ASC']],
+    include: [{
+      model: Team,
+      as: 'teamHome',
+      attributes: { exclude: ['id'] },
+    },
+    {
+      model: Team,
+      as: 'teamAway',
+      attributes: { exclude: ['id'] },
+    }],
+  });
 }
