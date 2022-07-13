@@ -12,5 +12,6 @@ const teamController = new TeamController();
 router.post('/login', validateJoi(Schema), loginController.create);
 router.get('/login/validate', authToken, loginController.getValidade);
 router.get('/teams', teamController.getAll);
+router.get('/teams/:id', teamController.getById);
 
 export default router;
