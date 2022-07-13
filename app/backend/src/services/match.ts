@@ -45,6 +45,9 @@ export default class Matches implements IModel {
   });
 
   createMacth = async (data: IMatch): Promise<IMatch> => {
+    if (data.homeTeam === data.awayTeam) {
+      throw new Error('It is not possible to create a match with two equal teams');
+    }
     const match = await Model.create(data);
     return match as IMatch;
   };
