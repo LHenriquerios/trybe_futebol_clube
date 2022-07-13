@@ -22,7 +22,7 @@ Team.init({
   // ... Outras configs
   underscored: true,
   sequelize: db,
-  modelName: 'Teams',
+  modelName: 'Team',
   timestamps: false,
   tableName: 'teams',
 });
