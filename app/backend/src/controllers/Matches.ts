@@ -24,4 +24,17 @@ export default class Controller {
       next(error);
     }
   };
+
+  createMacth = async (req: Request, res: Response, next: NextFunction) => {
+    const service = new UserService();
+
+    try {
+      const body = { ...req.body, inProgress: true };
+      const data = await service.createMacth(body);
+
+      return res.status(StatusCodes.CREATED).json(data);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

@@ -43,4 +43,9 @@ export default class Matches implements IModel {
       attributes: { exclude: ['id'] },
     }],
   });
+
+  createMacth = async (data: IMatch): Promise<IMatch> => {
+    const match = await Model.create(data);
+    return match as IMatch;
+  };
 }
