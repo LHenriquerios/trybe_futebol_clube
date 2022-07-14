@@ -50,7 +50,10 @@ export default class Matches implements IModel {
 
   createMacth = async (data: IMatch): Promise<IMatch> => {
     if (data.homeTeam === data.awayTeam) {
-      throw new Error('It is not possible to create a match with two equal teams');
+      const error = { status: StatusCodes.UNAUTHORIZED,
+        message: 'It is not possible to create a match with two equal teams',
+      };
+      throw error as ErrorHandler;
     }
     const homeTeamExists = await this.teamService.getById(data.homeTeam);
     const awayTeamExists = await this.teamService.getById(data.awayTeam);

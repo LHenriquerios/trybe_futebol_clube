@@ -17,7 +17,7 @@ const errorMiddleware = (
   }
   if (err.message.includes('invalid token') || err.message.includes('jwt malformed')
   || err.message.includes('jwt expired')) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Expired or invalid token' });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token must be a valid token' });
   }
 
   console.log(err.message);
