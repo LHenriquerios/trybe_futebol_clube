@@ -50,4 +50,17 @@ export default class Controller {
       next(error);
     }
   };
+
+  updateMacth = async (req: Request, res: Response, next: NextFunction) => {
+    const service = new UserService();
+
+    try {
+      const { id } = req.params;
+      const data = await service.updateMatch(id, req.body);
+
+      return res.status(StatusCodes.OK).json(data);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
