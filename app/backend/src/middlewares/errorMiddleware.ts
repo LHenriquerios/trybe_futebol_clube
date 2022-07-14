@@ -12,10 +12,6 @@ const errorMiddleware = (
   res: Response,
   _next: NextFunction,
 ) => {
-  if (err.status) {
-    return res.status(err.status).json({ message: 'All fields must be filled' });
-  }
-
   if (err.message.includes('Incorrect email or password')
   || err.message.includes('It is not possible to create a match with two equal teams')) {
     return res.status(StatusCodes.UNAUTHORIZED).json({ message: err.message });
@@ -23,6 +19,10 @@ const errorMiddleware = (
 
   if (err.message.includes('There is no team with such id!')) {
     return res.status(StatusCodes.NOT_FOUND).json({ message: err.message });
+  }
+
+  if (err.message.includes('jwt malformed')) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token must be a valid token' });
   }
 
   console.log(err.message);
