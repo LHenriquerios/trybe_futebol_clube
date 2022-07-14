@@ -45,7 +45,7 @@ export default class Controller {
       const { id } = req.params;
       const data = await service.finishMatch(id);
 
-      return res.status(StatusCodes.CREATED).json(data);
+      return res.status(StatusCodes.OK).json(data);
     } catch (error) {
       next(error);
     }
