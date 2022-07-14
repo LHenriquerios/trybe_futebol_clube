@@ -37,4 +37,17 @@ export default class Controller {
       next(error);
     }
   };
+
+  finishMacth = async (req: Request, res: Response, next: NextFunction) => {
+    const service = new UserService();
+
+    try {
+      const { id } = req.params;
+      const data = await service.finishMatch(id);
+
+      return res.status(StatusCodes.CREATED).json(data);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

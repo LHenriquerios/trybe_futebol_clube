@@ -58,4 +58,9 @@ export default class Matches implements IModel {
     const match = await Model.create(data);
     return match as IMatch;
   };
+
+  finishMatch = async (id: string): Promise<object> => {
+    await Model.update({ inProgress: false }, { where: { id } });
+    return { message: 'Finished' };
+  };
 }
