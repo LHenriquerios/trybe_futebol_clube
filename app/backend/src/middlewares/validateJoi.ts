@@ -6,8 +6,13 @@ const validateJoi = (schemas:Schema) => (req: Request, _res: Response, next: Nex
   const { error } = schemas.validate(req.body);
 
   if (error) {
+    console.log(error.details[0]);
+
     switch (error.details[0].type) {
       case 'string.empty':
+        next({ status: StatusCodes.BAD_REQUEST, message: error.details[0].message });
+        break;
+      case 'any.required':
         next({ status: StatusCodes.BAD_REQUEST, message: error.details[0].message });
         break;
       default:

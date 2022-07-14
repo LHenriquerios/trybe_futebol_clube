@@ -1,7 +1,9 @@
+import { StatusCodes } from 'http-status-codes';
 import Model from '../database/models/Match';
 import Team from '../database/models/Teams';
 import TeamService from './team';
 import { IMatch, IModel } from '../interfaces/Matches';
+import { ErrorHandler } from '../interfaces/errors';
 
 export default class Matches implements IModel {
   teamService = new TeamService();
@@ -53,7 +55,10 @@ export default class Matches implements IModel {
     const homeTeamExists = await this.teamService.getById(data.homeTeam);
     const awayTeamExists = await this.teamService.getById(data.awayTeam);
 
-    if (!homeTeamExists || !awayTeamExists) throw new Error('There is no team with such id!');
+    if (!homeTeamExists || !awayTeamExists) {
+      const error = { status: StatusCodes.NOT_FOUND, message: 'There is no team with such id!' };
+      throw error as ErrorHandler;
+    }
 
     const match = await Model.create(data);
     return match as IMatch;
