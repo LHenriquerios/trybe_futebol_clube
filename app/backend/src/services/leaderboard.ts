@@ -78,7 +78,7 @@ export default class Leaderboard {
   };
 
   private objectLeaderboardHome = () => this.teams.map((team) => ({
-    nome: team.teamName,
+    name: team.teamName,
     totalPoints: (this.gamesResultsHome(team.id).totalVictories * 3)
         + this.gamesResultsHome(team.id).totalDraws,
     totalGames: this.totalGames(team.id).homeTeamGames.length,
