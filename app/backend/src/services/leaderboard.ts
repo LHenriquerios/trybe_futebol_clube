@@ -77,24 +77,41 @@ export default class Leaderboard {
     return { goalsFavorAway, goalsOwnAway };
   };
 
+  private objectLeaderboardHome = () => this.teams.map((team) => ({
+    nome: team.teamName,
+    totalPoints: (this.gamesResultsHome(team.id).totalVictories * 3)
+        + this.gamesResultsHome(team.id).totalDraws,
+    totalGames: this.totalGames(team.id).homeTeamGames.length,
+    totalVictories: this.gamesResultsHome(team.id).totalVictories,
+    totalDraws: this.gamesResultsHome(team.id).totalDraws,
+    totalLosses: this.gamesResultsHome(team.id).totalLosses,
+    goalsFavor: this.homeGoalsBalance(team.id).goalsFavorAtHome,
+    goalsOwn: this.homeGoalsBalance(team.id).goalsOwnAtHome,
+    goalsBalance: this.homeGoalsBalance(team.id).goalsFavorAtHome
+        - this.homeGoalsBalance(team.id).goalsOwnAtHome,
+    efficiency: ((((this.gamesResultsHome(team.id).totalVictories * 3
+        + this.gamesResultsHome(team.id).totalDraws)
+      / (this.totalGames(team.id).homeTeamGames.length * 3)) * 100)).toFixed(2),
+  }));
+
   showLeaderboardHome = async () => {
     this.matches = await MatchModel.findAll();
     this.teams = await TeamModel.findAll();
-    return this.teams.map((team) => ({
-      nome: team.teamName,
-      totalPoints: (this.gamesResultsHome(team.id).totalVictories * 3)
-        + this.gamesResultsHome(team.id).totalDraws,
-      totalGames: this.totalGames(team.id).homeTeamGames.length,
-      totalVictories: this.gamesResultsHome(team.id).totalVictories,
-      totalDraws: this.gamesResultsHome(team.id).totalDraws,
-      totalLosses: this.gamesResultsHome(team.id).totalLosses,
-      goalsFavor: this.homeGoalsBalance(team.id).goalsFavorAtHome,
-      goalsOwn: this.homeGoalsBalance(team.id).goalsOwnAtHome,
-      goalsBalance: this.homeGoalsBalance(team.id).goalsFavorAtHome
-        - this.homeGoalsBalance(team.id).goalsOwnAtHome,
-      efficiency: ((this.gamesResultsHome(team.id).totalVictories * 3)
-        + this.gamesResultsHome(team.id).totalDraws)
-      / (this.totalGames(team.id).homeTeamGames.length * 3) / 100,
-    }));
+    const data = this.objectLeaderboardHome();
+    return data.sort((x, y) => {
+      if (x.totalVictories === y.totalVictories) {
+        if (x.goalsBalance === y.goalsBalance) {
+          if (x.goalsFavor === y.goalsFavor) {
+            return x.goalsOwn - y.goalsOwn;
+          }
+
+          return y.goalsFavor - x.goalsFavor;
+        }
+
+        return y.goalsBalance - x.goalsBalance;
+      }
+
+      return y.totalVictories - x.totalVictories;
+    });
   };
 }
