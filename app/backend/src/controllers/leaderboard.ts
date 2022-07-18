@@ -6,7 +6,7 @@ export default class Controller {
   getAll = async (req: Request, res: Response, next: NextFunction) => {
     const service = new UserService();
     try {
-      const data = await service.totalGames(1);
+      const data = await service.showLeaderboardHome();
       return res.status(StatusCodes.OK).json(data);
     } catch (error) {
       next(error);
