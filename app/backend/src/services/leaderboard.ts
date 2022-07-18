@@ -99,19 +99,23 @@ export default class Leaderboard {
     this.teams = await TeamModel.findAll();
     const data = this.objectLeaderboardHome();
     return data.sort((x, y) => {
-      if (x.totalVictories === y.totalVictories) {
-        if (x.goalsBalance === y.goalsBalance) {
-          if (x.goalsFavor === y.goalsFavor) {
-            return x.goalsOwn - y.goalsOwn;
+      if (x.totalPoints === y.totalPoints) {
+        if (x.totalVictories === y.totalVictories) {
+          if (x.goalsBalance === y.goalsBalance) {
+            if (x.goalsFavor === y.goalsFavor) {
+              return x.goalsOwn - y.goalsOwn;
+            }
+
+            return y.goalsFavor - x.goalsFavor;
           }
 
-          return y.goalsFavor - x.goalsFavor;
+          return y.goalsBalance - x.goalsBalance;
         }
 
-        return y.goalsBalance - x.goalsBalance;
+        return y.totalVictories - x.totalVictories;
       }
 
-      return y.totalVictories - x.totalVictories;
+      return y.totalPoints - x.totalPoints;
     });
   };
 }
