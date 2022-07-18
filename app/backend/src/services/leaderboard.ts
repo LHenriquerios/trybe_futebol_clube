@@ -95,7 +95,7 @@ export default class Leaderboard {
   }));
 
   showLeaderboardHome = async () => {
-    this.matches = await MatchModel.findAll();
+    this.matches = await MatchModel.findAll({ where: { inProgress: false } });
     this.teams = await TeamModel.findAll();
     const data = this.objectLeaderboardHome();
     return data.sort((x, y) => {
